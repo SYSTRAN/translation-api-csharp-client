@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Systran.TranslationClientLib.Client;
 using Systran.TranslationClientLib.Api;
 using Systran.TranslationClientLib.Model;
+using System.IO;
 
 namespace Systran.Tests
 {
@@ -20,10 +21,15 @@ namespace Systran.Tests
         [ClassInitialize()]
         public static void ClassInit(TestContext context)
         {
-            client = new ApiClient("PLATFORM_URL_HERE");
+            client = new ApiClient("https://platform.systran.net:8904");
             Configuration.apiClient = client;
             Dictionary<String, String> keys = new Dictionary<String, String>();
-            keys.Add("key", "API_KEY_HERE");
+            string key;
+            using (StreamReader streamReader = new StreamReader("../../key.txt", Encoding.UTF8))
+            {
+                key = streamReader.ReadToEnd();
+            }
+            keys.Add("key", key); Configuration.apiKey = keys; Configuration.apiKey = keys;
             Configuration.apiKey = keys;
             translationApi = new TranslationApi(Configuration.apiClient);
         }
@@ -186,7 +192,7 @@ namespace Systran.Tests
         public void TranslationTranslateCancelGetTest()
         {
             TranslationFileResponse fileResponse = new TranslationFileResponse();
-            fileResponse = translationApi.TranslationTranslateFileGet("This is a test", "en", "fr", null, null, false, false, null, null, null, null, false, null, null);
+            fileResponse = translationApi.TranslationTranslateFileGet("test.txt", "en", "fr", null, null, false, false, null, null, null, null, false, null, null);
 
             TranslationCancel translationCancel = new TranslationCancel();
             translationCancel = translationApi.TranslationTranslateCancelGet(fileResponse.RequestId, null);
@@ -197,7 +203,7 @@ namespace Systran.Tests
         public void TranslationTranslateCancelGetAsyncTest()
         {
             TranslationFileResponse fileResponse = new TranslationFileResponse();
-            fileResponse = translationApi.TranslationTranslateFileGet("This is a test", "en", "fr", null, null, false, false, null, null, null, null, false, null, null);
+            fileResponse = translationApi.TranslationTranslateFileGet("test.txt", "en", "fr", null, null, false, false, null, null, null, null, false, null, null);
 
             TranslationCancel translationCancel = new TranslationCancel();
             Task.Run(async () =>
@@ -211,7 +217,7 @@ namespace Systran.Tests
         public void TranslationTranslateFileGetTest()
         {
             TranslationFileResponse fileResponse = new TranslationFileResponse();
-            fileResponse = translationApi.TranslationTranslateFileGet("This is a test", "en", "fr", null, null, false, false, null, null, null, null, false, null, null);
+            fileResponse = translationApi.TranslationTranslateFileGet("test.txt", "en", "fr", null, null, false, false, null, null, null, null, false, null, null);
             Assert.IsNotNull(fileResponse.RequestId);
         }
 
@@ -221,7 +227,7 @@ namespace Systran.Tests
             TranslationFileResponse fileResponse = new TranslationFileResponse();
             Task.Run(async () =>
             {
-                fileResponse = await translationApi.TranslationTranslateFileGetAsync("This is a test", "en", "fr", null, null, false, false, null, null, null, null, false, null, null);
+                fileResponse = await translationApi.TranslationTranslateFileGetAsync("test.txt", "en", "fr", null, null, false, false, null, null, null, null, false, null, null);
             }).Wait();
             Assert.IsNotNull(fileResponse.RequestId);
         }
@@ -230,7 +236,7 @@ namespace Systran.Tests
         public void TranslationTranslateResultGetTest()
         {
             TranslationFileResponse fileResponse = new TranslationFileResponse();
-            fileResponse = translationApi.TranslationTranslateFileGet("This is a test", "en", "fr", null, null, false, false, null, null, null, null, false, null, null);
+            fileResponse = translationApi.TranslationTranslateFileGet("test.txt", "en", "fr", null, null, false, false, null, null, null, null, false, null, null);
 
             TranslationResponse translationResponse = new TranslationResponse();
             translationResponse = translationApi.TranslationTranslateResultGet(fileResponse.RequestId, null);
@@ -241,7 +247,7 @@ namespace Systran.Tests
         public void TranslationTranslateResultGetAsyncTest()
         {
             TranslationFileResponse fileResponse = new TranslationFileResponse();
-            fileResponse = translationApi.TranslationTranslateFileGet("This is a test", "en", "fr", null, null, false, false, null, null, null, null, false, null, null);
+            fileResponse = translationApi.TranslationTranslateFileGet("test.txt", "en", "fr", null, null, false, false, null, null, null, null, true, null, null);
 
 
             TranslationResponse translationResponse = new TranslationResponse();
@@ -256,7 +262,7 @@ namespace Systran.Tests
         public void TranslationTranslateStatusGetTest()
         {
             TranslationFileResponse fileResponse = new TranslationFileResponse();
-            fileResponse = translationApi.TranslationTranslateFileGet("This is a test", "en", "fr", null, null, false, false, null, null, null, null, false, null, null);
+            fileResponse = translationApi.TranslationTranslateFileGet("test.txt", "en", "fr", null, null, false, false, null, null, null, null, false, null, null);
 
             TranslationStatus translationStatus = new TranslationStatus();
             translationStatus = translationApi.TranslationTranslateStatusGet(fileResponse.RequestId, null);
@@ -267,7 +273,7 @@ namespace Systran.Tests
         public void TranslationTranslateStatusGetAsyncTest()
         {
             TranslationFileResponse fileResponse = new TranslationFileResponse();
-            fileResponse = translationApi.TranslationTranslateFileGet("This is a test", "en", "fr", null, null, false, false, null, null, null, null, false, null, null);
+            fileResponse = translationApi.TranslationTranslateFileGet("test.txt", "en", "fr", null, null, false, false, null, null, null, null, false, null, null);
  
             TranslationStatus translationStatus = new TranslationStatus();
             Task.Run(async () =>
