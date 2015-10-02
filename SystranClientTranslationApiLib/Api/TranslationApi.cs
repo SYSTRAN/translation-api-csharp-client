@@ -143,14 +143,14 @@ namespace Systran.TranslationClientLib.Api
     /// </summary>
     /// <param name="RequestId">Request Identifier\n</param>/// <param name="Callback">Javascript callback function name for JSONP Support\n</param>
     /// <returns>TranslationResponse</returns>
-    TranslationResponse TranslationTranslateResultGet (string RequestId, string Callback);
+    String TranslationTranslateResultGet (string RequestId, string Callback);
 
     /// <summary>
     /// Translate Result Get the result of an asynchronous translation request\n\nDepending on the initial request, the response can have multiple formats:\n* `/translation/translate` initiated request\n\n    &amp;#x2192; the response will be a JSON document (model below)\n\n* `/translation/translate/file` initiated request\n\n   &amp;#x2192; the response will be either:\n\n  * The **translated document**, directly, if `source` parameters was not `auto` and `withSource` was not true\n  * A `multipart/mixed` document with the following parts:\n\n    1. **Detected language**, if request was done with `auto` source language\n\n      * Header:\n\n        `part-name: detectedLanguage`\n\n      * Body: JSON document\n        ```\n        {\n          detectedLanguage: \&quot;string\&quot;\n          detectedLanguageConfidence : number\n        }\n        ```\n\n    2. **Source document**, if request was done with `withSource`:\n\n      * Header: `part-name: source`\n      * Body: Source document\n\n    3. **Translated document**\n\n      * Header: `part-name: output`\n\n      * Body: Translated document\n\nAn error can occur in the following cases:\n* Invalid request ID\n* No result available (see request status for more information)\n* Unable to retrieve the result\n* ...\n
     /// </summary>
     /// <param name="RequestId">Request Identifier\n</param>/// <param name="Callback">Javascript callback function name for JSONP Support\n</param>
     /// <returns>TranslationResponse</returns>
-    Task<TranslationResponse> TranslationTranslateResultGetAsync (string RequestId, string Callback);
+    Task<String> TranslationTranslateResultGetAsync (string RequestId, string Callback);
     
     /// <summary>
     /// Translate Status Get the status of an asynchronous translation request\n\nThe translation result is available when the value of the status field is `finished`.\n\nThe translation request is unsuccessful when the value of the status field is `error`.\n
@@ -1001,7 +1001,7 @@ namespace Systran.TranslationClientLib.Api
     /// </summary>
     /// <param name="RequestId">Request Identifier\n</param>/// <param name="Callback">Javascript callback function name for JSONP Support\n</param>
     /// <returns>TranslationResponse</returns>
-    public TranslationResponse TranslationTranslateResultGet (string RequestId, string Callback) {
+    public String TranslationTranslateResultGet (string RequestId, string Callback) {
 
       
       // verify the required parameter 'RequestId' is set
@@ -1034,7 +1034,7 @@ namespace Systran.TranslationClientLib.Api
       if (((int)response.StatusCode) >= 400) {
         throw new ApiException ((int)response.StatusCode, "Error calling TranslationTranslateResultGet: " + response.Content, response.Content);
       }
-      return (TranslationResponse) apiClient.Deserialize(response.Content, typeof(TranslationResponse));
+      return response.Content;
     }
 	
 	 /// <summary>
@@ -1042,7 +1042,7 @@ namespace Systran.TranslationClientLib.Api
     /// </summary>
     /// <param name="RequestId">Request Identifier\n</param>/// <param name="Callback">Javascript callback function name for JSONP Support\n</param>
     /// <returns>TranslationResponse</returns>
-    public async Task<TranslationResponse> TranslationTranslateResultGetAsync (string RequestId, string Callback) {
+    public async Task<String> TranslationTranslateResultGetAsync (string RequestId, string Callback) {
 
       
           // verify the required parameter 'RequestId' is set
@@ -1074,7 +1074,7 @@ namespace Systran.TranslationClientLib.Api
       if (((int)response.StatusCode) >= 400) {
         throw new ApiException ((int)response.StatusCode, "Error calling TranslationTranslateResultGet: " + response.Content, response.Content);
       }
-      return (TranslationResponse) apiClient.Deserialize(response.Content, typeof(TranslationResponse));
+      return response.Content;
     }
     
     /// <summary>

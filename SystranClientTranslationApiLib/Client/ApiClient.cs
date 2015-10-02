@@ -75,7 +75,12 @@ namespace Systran.TranslationClientLib.Client
 
       // add file parameter, if any
       foreach(KeyValuePair<string, string> param in FileParams)
-        request.AddFile(param.Key, param.Value);
+            {
+                request.AddFile(param.Key, param.Value);
+                //        request.AddFile("audioFile", param.Value);
+
+                request.Method = Method.POST;
+            }
 
       if (PostBody != null) {
         request.AddParameter("application/json", PostBody, ParameterType.RequestBody); // http body (model) parameter
@@ -115,6 +120,7 @@ namespace Systran.TranslationClientLib.Client
     /// <summary>
     /// if parameter is DateTime, output in ISO8601 format
     /// if parameter is a list of string, join the list with ","
+    /// if parameter is bool, output false or true, as default False or True isn't supported by the API
     /// otherwise just return the string
     /// </summary>
     /// <param name="obj"> The parameter (header, path, query, form)
@@ -125,6 +131,10 @@ namespace Systran.TranslationClientLib.Client
         return ((DateTime)obj).ToString ("u");
       } else if (obj is List<string>) {
         return String.Join(",", obj as List<string>);
+      }
+        else if (obj is bool)
+      {
+        return ((bool) obj) ? "true" : "false" ;
       } else {
 	return Convert.ToString (obj);
       }

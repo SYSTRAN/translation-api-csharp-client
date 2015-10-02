@@ -28,13 +28,17 @@ namespace Systran.TranslationClientLib.Model {
     [DataMember(Name="requestId", EmitDefaultValue=false)]
     public string RequestId { get; set; }
 
-    
+    /* Translated text */
+    /* Outputs of translation */
+    [DataMember(Name = "outputs", EmitDefaultValue = false)]
+    public List<TranslationOutput> Outputs { get; set; }
 
-    /// <summary>
-    /// Get the string presentation of the object
-    /// </summary>
-    /// <returns>String presentation of the object</returns>
-    public override string ToString()  {
+
+        /// <summary>
+        /// Get the string presentation of the object
+        /// </summary>
+        /// <returns>String presentation of the object</returns>
+        public override string ToString()  {
       var sb = new StringBuilder();
       sb.Append("class TranslationFileResponse {\n");
       
@@ -43,7 +47,9 @@ namespace Systran.TranslationClientLib.Model {
       sb.Append("  Error: ").Append(Error).Append("\n");
       
       sb.Append("  RequestId: ").Append(RequestId).Append("\n");
-      
+
+      sb.Append("  Outputs: ").Append(Outputs).Append("\n");
+
       sb.Append("}\n");
       return sb.ToString();
     }

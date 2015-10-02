@@ -25,7 +25,7 @@ namespace Systran.Tests
             Configuration.apiClient = client;
             Dictionary<String, String> keys = new Dictionary<String, String>();
             string key;
-            using (StreamReader streamReader = new StreamReader("../../key.txt", Encoding.UTF8))
+            using (StreamReader streamReader = new StreamReader("../../apiKey.txt", Encoding.UTF8))
             {
                 key = streamReader.ReadToEnd();
             }
@@ -185,14 +185,15 @@ namespace Systran.Tests
             {
                 response = await translationApi.TranslationTranslateGetAsync(sample, "en", "fr", null, null, true, false, null, null, false, null, null, false, null, null);
             }).Wait();
-            Assert.IsNotNull(response.Outputs);
+     
+            Assert.IsNotNull(response.Outputs[0]);
        }
 
         [TestMethod()]
         public void TranslationTranslateCancelGetTest()
         {
             TranslationFileResponse fileResponse = new TranslationFileResponse();
-            fileResponse = translationApi.TranslationTranslateFileGet("test.txt", "en", "fr", null, null, false, false, null, null, null, null, false, null, null);
+            fileResponse = translationApi.TranslationTranslateFileGet("../../test.txt", "en", "fr", null, null, false, false, null, null, null, null, true, null, null);
 
             TranslationCancel translationCancel = new TranslationCancel();
             translationCancel = translationApi.TranslationTranslateCancelGet(fileResponse.RequestId, null);
@@ -200,25 +201,11 @@ namespace Systran.Tests
         }
 
         [TestMethod()]
-        public void TranslationTranslateCancelGetAsyncTest()
-        {
-            TranslationFileResponse fileResponse = new TranslationFileResponse();
-            fileResponse = translationApi.TranslationTranslateFileGet("test.txt", "en", "fr", null, null, false, false, null, null, null, null, false, null, null);
-
-            TranslationCancel translationCancel = new TranslationCancel();
-            Task.Run(async () =>
-            {
-                translationCancel = await translationApi.TranslationTranslateCancelGetAsync(fileResponse.RequestId, null);
-            }).Wait();
-            Assert.IsNotNull(translationCancel.ToString());
-        }
-
-        [TestMethod()]
         public void TranslationTranslateFileGetTest()
         {
             TranslationFileResponse fileResponse = new TranslationFileResponse();
-            fileResponse = translationApi.TranslationTranslateFileGet("test.txt", "en", "fr", null, null, false, false, null, null, null, null, false, null, null);
-            Assert.IsNotNull(fileResponse.RequestId);
+            fileResponse = translationApi.TranslationTranslateFileGet("../../test.txt", "en", "fr", null, null, false, false, null, null, null, null, false, null, null);
+            Assert.IsNotNull(fileResponse);
         }
 
         [TestMethod()]
@@ -227,60 +214,47 @@ namespace Systran.Tests
             TranslationFileResponse fileResponse = new TranslationFileResponse();
             Task.Run(async () =>
             {
-                fileResponse = await translationApi.TranslationTranslateFileGetAsync("test.txt", "en", "fr", null, null, false, false, null, null, null, null, false, null, null);
+                fileResponse = await translationApi.TranslationTranslateFileGetAsync("../../test.txt", "en", "fr", null, null, true, false, null, null, null, null, false, null, null);
             }).Wait();
-            Assert.IsNotNull(fileResponse.RequestId);
+            Assert.IsNotNull(fileResponse);
         }
 
         [TestMethod()]
         public void TranslationTranslateResultGetTest()
         {
             TranslationFileResponse fileResponse = new TranslationFileResponse();
-            fileResponse = translationApi.TranslationTranslateFileGet("test.txt", "en", "fr", null, null, false, false, null, null, null, null, false, null, null);
+            fileResponse = translationApi.TranslationTranslateFileGet("../../test.txt", "en", "fr", null, null, false, false, null, null, null, null, true, null, null);
 
-            TranslationResponse translationResponse = new TranslationResponse();
+            String translationResponse = null;
             translationResponse = translationApi.TranslationTranslateResultGet(fileResponse.RequestId, null);
-            Assert.IsNotNull(translationResponse.RequestId);
+            Assert.IsNotNull(translationResponse);
         }
 
         [TestMethod()]
         public void TranslationTranslateResultGetAsyncTest()
         {
             TranslationFileResponse fileResponse = new TranslationFileResponse();
-            fileResponse = translationApi.TranslationTranslateFileGet("test.txt", "en", "fr", null, null, false, false, null, null, null, null, true, null, null);
+            fileResponse = translationApi.TranslationTranslateFileGet("../../test.txt", "en", "fr", null, null, false, false, null, null, null, null, true, null, null);
 
 
-            TranslationResponse translationResponse = new TranslationResponse();
+            String translationResponse = null ;
             Task.Run(async () =>
             {
                 translationResponse = await translationApi.TranslationTranslateResultGetAsync(fileResponse.RequestId, null);
             }).Wait();
-            Assert.IsNotNull(translationResponse.RequestId);
+            Assert.IsNotNull(translationResponse);
         }
 
         [TestMethod()]
         public void TranslationTranslateStatusGetTest()
         {
             TranslationFileResponse fileResponse = new TranslationFileResponse();
-            fileResponse = translationApi.TranslationTranslateFileGet("test.txt", "en", "fr", null, null, false, false, null, null, null, null, false, null, null);
+            fileResponse = translationApi.TranslationTranslateFileGet("../../test.txt", "en", "fr", null, null, false, false, null, null, null, null, true, null, null);
 
             TranslationStatus translationStatus = new TranslationStatus();
             translationStatus = translationApi.TranslationTranslateStatusGet(fileResponse.RequestId, null);
             Assert.IsNotNull(translationStatus.Status);
         }
 
-        [TestMethod()]
-        public void TranslationTranslateStatusGetAsyncTest()
-        {
-            TranslationFileResponse fileResponse = new TranslationFileResponse();
-            fileResponse = translationApi.TranslationTranslateFileGet("test.txt", "en", "fr", null, null, false, false, null, null, null, null, false, null, null);
- 
-            TranslationStatus translationStatus = new TranslationStatus();
-            Task.Run(async () =>
-            {
-                translationStatus = await translationApi.TranslationTranslateStatusGetAsync(fileResponse.RequestId, null);
-            }).Wait();
-            Assert.IsNotNull(translationStatus.Status);
-        }
     }
 }

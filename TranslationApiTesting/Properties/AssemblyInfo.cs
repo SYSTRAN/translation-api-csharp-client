@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SystranClientTranslationApiLib")]
+[assembly: AssemblyTitle("TranslationApiTesting")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Systran")]
-[assembly: AssemblyProduct("SystranClientTranslationApiLib")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("TranslationApiTesting")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("5ca8aac7-110f-4c7e-adca-e066fb38a2aa")]
+[assembly: Guid("c533d3a4-8b46-452d-8442-329d1a18c8cb")]
 
 // Version information for an assembly consists of the following four values:
 //
