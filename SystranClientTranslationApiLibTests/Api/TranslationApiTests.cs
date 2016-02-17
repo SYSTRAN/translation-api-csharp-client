@@ -22,7 +22,7 @@ namespace Systran.Tests
         public static void ClassInit(TestContext context)
         {
             if (!File.Exists("../../apiKey.txt"))
-                throw new Exception("To properly run the tests, please add an apiKey.txt file containing your api key in the SystranClientMultimodalApiLibTests folder or edit the test file with your key");
+                throw new Exception("To properly run the tests, please add an apiKey.txt file containing your api key in the SystranClientTranslationApiLibTests folder or edit the test file with your key");
             client = new ApiClient("https://platform.systran.net:8904");
             Configuration.apiClient = client;
             Dictionary<String, String> keys = new Dictionary<String, String>();
