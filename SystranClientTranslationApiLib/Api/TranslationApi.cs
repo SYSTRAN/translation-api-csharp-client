@@ -231,7 +231,7 @@ namespace Systran.TranslationClientLib.Api
       if (BatchId == null) throw new ApiException(400, "Missing required parameter 'BatchId' when calling TranslationBatchCancelGet");
       
 
-      var path = "/translation/batch/cancel";
+      var path = "/translation/file/batch/cancel";
       path = path.Replace("{format}", "json");
       
 
@@ -272,7 +272,7 @@ namespace Systran.TranslationClientLib.Api
           if (BatchId == null) throw new ApiException(400, "Missing required parameter 'BatchId' when calling TranslationBatchCancelGet");
       
 
-      var path = "/translation/batch/cancel";
+      var path = "/translation/file/batch/cancel";
       path = path.Replace("{format}", "json");
       
 
@@ -312,7 +312,7 @@ namespace Systran.TranslationClientLib.Api
       if (BatchId == null) throw new ApiException(400, "Missing required parameter 'BatchId' when calling TranslationBatchCloseGet");
       
 
-      var path = "/translation/batch/close";
+      var path = "/translation/file/batch/close";
       path = path.Replace("{format}", "json");
       
 
@@ -353,7 +353,7 @@ namespace Systran.TranslationClientLib.Api
           if (BatchId == null) throw new ApiException(400, "Missing required parameter 'BatchId' when calling TranslationBatchCloseGet");
       
 
-      var path = "/translation/batch/close";
+      var path = "/translation/file/batch/close";
       path = path.Replace("{format}", "json");
       
 
@@ -390,7 +390,7 @@ namespace Systran.TranslationClientLib.Api
 
       
 
-      var path = "/translation/batch/create";
+      var path = "/translation/file/batch/create";
       path = path.Replace("{format}", "json");
       
 
@@ -427,7 +427,7 @@ namespace Systran.TranslationClientLib.Api
 
       
 
-      var path = "/translation/batch/create";
+      var path = "/translation/file/batch/create";
       path = path.Replace("{format}", "json");
       
 
@@ -466,7 +466,7 @@ namespace Systran.TranslationClientLib.Api
       if (BatchId == null) throw new ApiException(400, "Missing required parameter 'BatchId' when calling TranslationBatchStatusGet");
       
 
-      var path = "/translation/batch/status";
+      var path = "/translation/file/batch/status";
       path = path.Replace("{format}", "json");
       
 
@@ -507,7 +507,7 @@ namespace Systran.TranslationClientLib.Api
           if (BatchId == null) throw new ApiException(400, "Missing required parameter 'BatchId' when calling TranslationBatchStatusGet");
       
 
-      var path = "/translation/batch/status";
+      var path = "/translation/file/batch/status";
       path = path.Replace("{format}", "json");
       
 
@@ -706,7 +706,7 @@ namespace Systran.TranslationClientLib.Api
       if (Target == null) throw new ApiException(400, "Missing required parameter 'Target' when calling TranslationTranslateGet");
       
 
-      var path = "/translation/translate";
+      var path = "/translation/text/translate";
       path = path.Replace("{format}", "json");
       
 
@@ -763,7 +763,7 @@ namespace Systran.TranslationClientLib.Api
           if (Target == null) throw new ApiException(400, "Missing required parameter 'Target' when calling TranslationTranslateGet");
       
 
-      var path = "/translation/translate";
+      var path = "/translation/text/translate";
       path = path.Replace("{format}", "json");
       
 
@@ -816,7 +816,7 @@ namespace Systran.TranslationClientLib.Api
       if (RequestId == null) throw new ApiException(400, "Missing required parameter 'RequestId' when calling TranslationTranslateCancelGet");
       
 
-      var path = "/translation/translate/cancel";
+      var path = "/translation/file/cancel";
       path = path.Replace("{format}", "json");
       
 
@@ -900,7 +900,7 @@ namespace Systran.TranslationClientLib.Api
       if (Target == null) throw new ApiException(400, "Missing required parameter 'Target' when calling TranslationTranslateFileGet");
       
 
-      var path = "/translation/translate/file";
+      var path = "/translation/file/translate";
       path = path.Replace("{format}", "json");
       
 
@@ -938,6 +938,15 @@ namespace Systran.TranslationClientLib.Api
       if (((int)response.StatusCode) >= 400) {
         throw new ApiException ((int)response.StatusCode, "Error calling TranslationTranslateFileGet: " + response.Content, response.Content);
       }
+      if (!(bool) Async){  //non async calls return raw text, not JSON, avoid deserialization
+        TranslationFileResponse fileResponse = new TranslationFileResponse();
+        fileResponse.Outputs = new List<TranslationOutput>();
+        TranslationOutput output = new TranslationOutput();
+        output.Output = response.Content;
+        fileResponse.Outputs.Add(output);
+        return fileResponse;
+      }
+      else
       return (TranslationFileResponse) apiClient.Deserialize(response.Content, typeof(TranslationFileResponse));
     }
 	
@@ -956,7 +965,7 @@ namespace Systran.TranslationClientLib.Api
           if (Target == null) throw new ApiException(400, "Missing required parameter 'Target' when calling TranslationTranslateFileGet");
       
 
-      var path = "/translation/translate/file";
+      var path = "/translation/text/translate";
       path = path.Replace("{format}", "json");
       
 
@@ -1008,7 +1017,7 @@ namespace Systran.TranslationClientLib.Api
       if (RequestId == null) throw new ApiException(400, "Missing required parameter 'RequestId' when calling TranslationTranslateResultGet");
       
 
-      var path = "/translation/translate/result";
+      var path = "/translation/file/result";
       path = path.Replace("{format}", "json");
       
 
@@ -1049,7 +1058,7 @@ namespace Systran.TranslationClientLib.Api
           if (RequestId == null) throw new ApiException(400, "Missing required parameter 'RequestId' when calling TranslationTranslateResultGet");
       
 
-      var path = "/translation/translate/result";
+      var path = "/translation/file/result";
       path = path.Replace("{format}", "json");
       
 
@@ -1089,7 +1098,7 @@ namespace Systran.TranslationClientLib.Api
       if (RequestId == null) throw new ApiException(400, "Missing required parameter 'RequestId' when calling TranslationTranslateStatusGet");
       
 
-      var path = "/translation/translate/status";
+      var path = "/translation/file/status";
       path = path.Replace("{format}", "json");
       
 
@@ -1130,7 +1139,7 @@ namespace Systran.TranslationClientLib.Api
           if (RequestId == null) throw new ApiException(400, "Missing required parameter 'RequestId' when calling TranslationTranslateStatusGet");
       
 
-      var path = "/translation/translate/status";
+      var path = "/translation/file/status";
       path = path.Replace("{format}", "json");
       
 

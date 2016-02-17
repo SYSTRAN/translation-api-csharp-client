@@ -76,7 +76,7 @@ namespace Systran.TranslationClientLib.Client
       // add file parameter, if any
       foreach(KeyValuePair<string, string> param in FileParams)
             {
-                request.AddFile(param.Key, param.Value);
+                request.AddFile("input", param.Value);
                 //        request.AddFile("audioFile", param.Value);
 
                 request.Method = Method.POST;
@@ -120,7 +120,7 @@ namespace Systran.TranslationClientLib.Client
     /// <summary>
     /// if parameter is DateTime, output in ISO8601 format
     /// if parameter is a list of string, join the list with ","
-    /// if parameter is bool, output false or true, as default False or True isn't supported by the API
+    /// if parameter is bool, output false or true, as C3
     /// otherwise just return the string
     /// </summary>
     /// <param name="obj"> The parameter (header, path, query, form)
